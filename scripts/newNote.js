@@ -1,3 +1,5 @@
+const MonkeyLearn = require('monkeylearn');
+
 const saveButton = document.getElementById("Save");
 const textarea = document.getElementById("text-area");
 
@@ -22,3 +24,11 @@ saveButton.addEventListener("click", (e) => {
   }
 });
 
+
+
+const ml = new MonkeyLearn('[API_KEY]')
+let model_id = 'cl_pi3C7JiL'
+let data = ['This is a great tool!', {text: 'The location is excellent.', external_id: 'ANY_ID'}]
+ml.classifiers.classify(model_id, data).then(res => {
+    console.log(res.body)
+   })
