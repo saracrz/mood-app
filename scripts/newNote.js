@@ -2,12 +2,12 @@ const saveButton = document.getElementById("Save");
 const textarea = document.getElementById("text-area");
 
 const getSentiment = (classifications) => {
-  let words = classifications.text.split(' ');
+  let confidence = classifications[1].confidence.split(' ');
   let largerClassification = 0;
 
-  for(let i = 0; i < words.length; i++) {
-    if (words[i].length > largerClassification) {
-      largerClassification = words[i].length
+  for(let i = 0; i < confidence.length; i++) {
+    if (confidence[i].length > largerClassification) {
+      largerClassification = confidence[i].length
     }
   }
   return largerClassification;
