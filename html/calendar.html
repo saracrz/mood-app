@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log(events);
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
-    initialDate: '2021-03-04',
+    initialDate: new Date(),
     headerToolbar: {
     },
     events: JSON.parse(events)

@@ -2,15 +2,16 @@ const saveButton = document.getElementById("Save");
 const textarea = document.getElementById("text-area");
 
 const getSentiment = (classifications) => {
-  let confidence = classifications[1].confidence.split(' ');
-  let largerClassification = 0;
+  let confidence = classifications[0].classifications[0].tag_name;
+  return confidence;
+}
 
-  for(let i = 0; i < confidence.length; i++) {
-    if (confidence[i].length > largerClassification) {
-      largerClassification = confidence[i].length
-    }
+const chooseColor = (emotion) => {
+  switch(emotion){
+    case 'Positive' : return '#00ff00';
+    case 'Neutral' : return '#0000ff';
+    case 'Negative' : return '#ff0000';
   }
-  return largerClassification;
 }
 
 saveButton.addEventListener("click", (e) => {
@@ -24,17 +25,21 @@ saveButton.addEventListener("click", (e) => {
     "Content-Type": "application/json" }
   })
   .then(res => res.json())
-  .then(res => {
+  .then(res =>  {
     console.log(res);
     const eventList = localStorage.getItem("events");
     const date = new Date().toISOString();
+    const sentiments = getSentiment(res);
   
     if (eventList){
       const list = JSON.parse(eventList);
       const data = {
         title: textarea.value,
         start: date,
-        sentiment: getSentiment(),
+        sentiment: sentiments,
+        display: 'background',
+        allDay: true,
+        backgroundColor: chooseColor(sentiments),
       }
       list.push(data);
       localStorage.setItem("events", JSON.stringify(list));
@@ -42,9 +47,14 @@ saveButton.addEventListener("click", (e) => {
       const data = [{
         title: textarea.value,
         start: date,
+        sentiment: sentiments,
+        display: 'background',
+        allDay: true,
+        backgroundColor: chooseColor(sentiments),
       }]
       localStorage.setItem("events", JSON.stringify(data));
     }
+    window.location.assign('/html/calendar.html');
   })
 });
 
