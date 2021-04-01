@@ -8,7 +8,7 @@ const getSentiment = (classifications) => {
 
 const chooseColor = (emotion) => {
   switch(emotion){
-    case 'Positive' : return '#00ff00';
+    case 'Positive' : return '#6aedb2';
     case 'Neutral' : return '#0000ff';
     case 'Negative' : return '#ff0000';
   }
